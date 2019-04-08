@@ -1,0 +1,18 @@
+<div>
+    <i>Please choose color details</i>
+    <div>
+      <input type="color"  [(ngModel)]="data.Value" rgba/>
+    </div>
+    <div>
+      <label>Red</label>
+      <input type="range" min="0" max="360" [(ngModel)]="data.red"/>
+    </div>
+    <div>
+      <label>Blue</label>
+      <input type="range" min="0" max="360"  [(ngModel)]="data.green"/>
+    </div>
+    <div>
+      <label>Green</label>
+      <input type="range" min="0" max="360"  [(ngModel)]="data.blue"/>
+    </div>
+</div>

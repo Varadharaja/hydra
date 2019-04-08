@@ -1,0 +1,81 @@
+<div style="position:absolute; top: 130px; right: 0px; height: 60vh; width:30vw;">
+    <!--<svg width="20vw" height="30vh" xmlns="http://www.w3.org/2000/svg" >
+      <g transform="translate(0 0)">
+          <g transform="translate(0 50)" >
+              <image x="0" y="-5" xlink:href="assets/hydra-chat-user.png" height="60" width="60"/>
+              <text x="60" y="30" class="small"  fill="white">Welcome Guest</text>
+           </g>
+           <g transform="translate(0 120)" >
+              <image x="0" y="-5" xlink:href="assets/chat-user.png" height="60" width="60"/>
+              <text x="60" y="30" class="small">Hi Hydra</text>
+           </g>
+           <g transform="translate(0 190)" >
+              <image x="0" y="-5" xlink:href="assets/hydra-chat-user.png" height="60" width="60"/>
+              <text x="60" y="30" class="small" fill="white">How can I help you?</text>
+           </g>
+           <g transform="translate(0 260)" >
+              <image x="0" y="-5" xlink:href="assets/chat-user.png" height="60" width="60"/>
+              <text x="60" y="30" class="small">Need to automate a set of steps</text>
+           </g>
+       </g>
+  </svg>-->
+<svg width="30vw" height="80vh" xmlns="http://www.w3.org/2000/svg">
+  <style>
+      .small { font: italic 13px sans-serif; }
+      .bold { font: bold 16px sans-serif; }
+
+      .medium { font: italic 16px sans-serif; }        
+    </style>
+  <defs>
+      <filter id="dropshadow" height="130%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="3"/> <!-- stdDeviation is how much to blur -->
+          <feOffset dx="4" dy="4" result="offsetblur"/> <!-- how much to offset -->
+          <feComponentTransfer>
+            <feFuncA type="linear" slope="0.2"/> <!-- slope is the opacity of the shadow -->
+          </feComponentTransfer>
+          <feMerge> 
+            <feMergeNode/> <!-- this contains the offset blurred image -->
+            <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+          </feMerge>
+        </filter>
+      
+    </defs>
+ 
+    <g for="conversations" transform="translate(-150 -250) scale(2 2.5)">
+        <path style="fill:#03a9f4; filter:url(#dropshadow);" d="M100,100 h200 a20,20 0 0 1 20,20 v200 a20,20 0 0 1 -20,20 h-200 a20,20 0 0 1 -20,-20 v-200 a20,20 0 0 1 20,-20 z" />
+        <path d="M100 100 L120 120 L280 120 L300 100 Z"  style="fill:white; filter:url(#dropshadow);"/>
+
+    </g>
+    <g for="console"  transform="translate(0 650)">
+        <path d="M0 25 L25 0 L450 0 L475 25 L450 50 L25 50 Z"  style="fill:white; filter:url(#dropshadow);"/>  
+        <!-- <text x="40" y="30" class="small" onclick="startChat()" id="chatTxtMessage">Please type your message here... </text> -->
+   </g>
+   <g>
+     <text class="medium" x="150" y="30">Chat with Hydra</text>
+   </g>
+</svg>
+<div style="position: absolute; top:50px; left: 50px; width: 22vw; height: 50vh; overflow-y: scroll"> 
+    <div *ngFor="let conv of Conversation"> 
+        <table>
+          <tr>
+            <td>
+                <img src="assets/{{conv.UserName}}chat-user.png" height="50" width="50"/>
+            </td>
+            <td>
+                <span *ngIf="conv.UserName == 'hydra-'" style="font: italic 13px sans-serif; color:white;">{{conv.Message}}</span>
+                <span *ngIf="conv.UserName == ''" style="font: italic 13px sans-serif; color:black">{{conv.Message}}</span>
+            </td>
+          </tr>
+        </table>
+
+    </div>
+    <div for="dyn-tmpl" tabindex="1">
+        <ng-template dyn-host></ng-template>
+    </div>
+
+</div>
+
+
+<input type="text"  placeholder="Please type your message here..." style="position: absolute; top:69vh; left:30px; width: 22vw;border: none;font: italic 13px sans-serif;outline: none" (keypress)="OnKeyPress($event)"  (keydown)="OnKeyDown($event)" for="chat-msg"/>
+
+</div>
