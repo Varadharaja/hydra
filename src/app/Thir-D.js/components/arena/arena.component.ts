@@ -3,6 +3,11 @@ import { IShape } from '../../contracts/IShape';
 import { ShapeTypes } from '../../contracts/ShapeTypes';
 import { Cube } from '../../contracts/cube';
 import { WebglUtils } from '../../contracts/webglUtils';
+import { Point } from '../../contracts/point';
+import { Transformation } from '../../contracts/transformation';
+import { Angle } from '../../contracts/angle';
+import { Scale } from '../../contracts/scale';
+import { Color } from '../../contracts/color';
 
 @Component({
   selector: 'app-arena',
@@ -12,7 +17,7 @@ import { WebglUtils } from '../../contracts/webglUtils';
 export class ArenaComponent implements OnInit {
 
   webglUtils: WebglUtils = new WebglUtils();
-
+  shapes: IShape[] = new Array();
   constructor() {
 
     
@@ -66,16 +71,20 @@ export class ArenaComponent implements OnInit {
     {
       case ShapeTypes.CUBE:
 
-      let cbe = new Cube(shape.Name, 1, 1, 1, shape.Color);
+      let r = "0x" + shape.Color.Value.substr(1,2);
+      let g = "0x" + shape.Color.Value.substr(3,2);
+      let b = "0x" + shape.Color.Value.substr(5,2);
+      let clr = new Color(parseInt(r), parseInt(g), parseInt(b));
 
+      let cbe = new Cube(shape.Name, 6, 6, 0.2, clr);
+      cbe.Transformation = new Transformation(new Point(-3,-1.5,-3),new Angle(0,0,0), new Angle(0,0,0), new Scale(1,1,1));
       cbe.SetPlanes();
 
       this.webglUtils.SetWebGLParams(cbe.Planes);
       WebglUtils.doAnimate = true;
       WebglUtils.animate(0);
       WebglUtils.doAnimate = true;
-      
-
+      this.shapes.push(cbe);
       break;
       case ShapeTypes.POLYGON:
       break;

@@ -1,9 +1,10 @@
 <div>
     <div>
        Color&nbsp;
-      <span [ngStyle]="{'backgroundColor': 'rgb(' + data.red + ',' + data.green + ',' + data.blue + ')' }">&nbsp;</span>
+      <!--<span [ngStyle]="{'backgroundColor': 'rgb(' + data.red + ',' + data.green + ',' + data.blue + ')' }">&nbsp;</span>-->
+      <input type="color" [(ngModel)]="data.Value"/>
     </div>
-    <div>
+    <!--<div>
       <label>Red</label>
       <input type="range" min="0" max="255" [(ngModel)]="data.red"/>
     </div>
@@ -14,5 +15,5 @@
     <div>
       <label>Blue</label>
       <input type="range" min="0" max="255"  [(ngModel)]="data.blue"/>
-    </div>
+    </div>-->
 </div>

@@ -54,8 +54,14 @@ export class Cube extends Shape
                 bottomFacePoints[idx1]
             ];
 
+            let colorModifier = 10 * sideIdx;
+            let r1 = this.Color.red*255 - colorModifier;
+            let g1 = this.Color.green*255 - colorModifier;
+            let b1 = this.Color.blue*255 - colorModifier;
 
-            planes[planes.length] = new Plane(facePoints,this.Color, this.Id);
+            let faceColor = new Color(r1,g1,b1);
+
+            planes[planes.length] = new Plane(facePoints,faceColor, this.Id);
 
         }
 

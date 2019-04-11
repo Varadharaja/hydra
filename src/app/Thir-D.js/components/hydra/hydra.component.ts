@@ -111,6 +111,21 @@ export class HydraComponent implements OnInit, OnDestroy  {
     }
   }
 
+  processMessage()
+  {
+    //  list shapes
+    //  select shape
+    //  change shape specific characteristics - e.g., height/width/Length
+    //  change/increase/decrease the height
+    //  Move the object left / right or top or below
+    //  Rotate the object
+    //  Scale the object
+    //  Keeping the context of which shape is under consideration
+    //  Load previously saved shapes
+    // Repeated tasks like workflows eg., move object 1 to the right of object2, place object 1 on top of obj2, etc., 
+
+  }
+
   loadComponent() {
 
     let compItem = this.comps[0];
