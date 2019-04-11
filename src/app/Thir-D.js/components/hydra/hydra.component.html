@@ -71,7 +71,10 @@
     </div>
     <div for="dyn-tmpl" tabindex="1">
         <ng-template dyn-host></ng-template>
-    </div>
+        <br/>
+        <button *ngIf="shouldShowApplyButton == true" (click)="applyChanges()" >Apply</button>
+      </div>
+
 
 </div>
 

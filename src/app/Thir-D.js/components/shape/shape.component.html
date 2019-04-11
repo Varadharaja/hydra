@@ -1,0 +1,26 @@
+<div>
+  <i>Please enter Shape details</i>
+  <table>
+    <tr>
+      <td>Id</td>
+      <td> <input type="text" [(ngModel)]="data.Id" disabled/></td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td> <input type="text"  [(ngModel)]="data.Name"/></td>
+    </tr>
+    <tr>
+      <td>Type</td>
+      <td>
+         <select  [(ngModel)]="data.Type">
+           <option value="0">CUBE</option>
+           <option value="1">POLYGON</option>
+           <option value="2">SPHERE</option>
+           <option value="3">CUSTOM</option>
+        </select>
+      </td>
+    </tr>
+ 
+  </table>
+  <app-color [data]="data.Color"></app-color> 
+</div>

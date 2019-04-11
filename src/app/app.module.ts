@@ -10,6 +10,8 @@ import { PointComponent } from './Thir-D.js/components/point/point.component';
 import { HydraComponent } from './Thir-D.js/components/hydra/hydra.component';
 import { DynamicDirective } from './dynamic.directive';
 import { ChatMessage } from './Thir-D.js/contracts/chatmessage';
+import { ShapeComponent } from './Thir-D.js/components/shape/shape.component';
+import { ArenaComponent } from './Thir-D.js/components/arena/arena.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { ChatMessage } from './Thir-D.js/contracts/chatmessage';
     ScaleComponent,
     PointComponent,
     HydraComponent,
-    DynamicDirective
+    DynamicDirective,
+    ShapeComponent,
+    ArenaComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,8 @@ import { ChatMessage } from './Thir-D.js/contracts/chatmessage';
     ColorComponent,
     ScaleComponent,
     PointComponent,
-    HydraComponent  ],
+    HydraComponent ,
+    ShapeComponent ],
   providers: [],
   bootstrap: [AppComponent]
 })

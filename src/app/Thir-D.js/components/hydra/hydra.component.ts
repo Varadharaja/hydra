@@ -8,6 +8,13 @@ import { ScaleComponent } from '../scale/scale.component';
 import { ColorComponent } from '../color/color.component';
 import { PointComponent } from '../point/point.component';
 import { CompItem } from 'src/app/compItem';
+import { ShapeComponent } from '../shape/shape.component';
+import { Shape } from '../../contracts/shape';
+import { GxUtils } from '../../contracts/gxUtils';
+import { Color } from '../../contracts/color';
+import { ArenaComponent } from '../arena/arena.component';
+import * as ng from "angular";
+
 
 @Component({
   selector: 'app-hydra',
@@ -16,9 +23,13 @@ import { CompItem } from 'src/app/compItem';
 })
 export class HydraComponent implements OnInit, OnDestroy  {
 
+  arena: ArenaComponent = new ArenaComponent();
+  shouldShowApplyButton: boolean = false;
   comps: CompItem[] = new Array();
 
   @ViewChild(DynamicDirective) dynHost: DynamicDirective;
+
+  dynHostData: any;
 
   Conversation: ChatMessage[] = new Array();
 
@@ -33,6 +44,14 @@ export class HydraComponent implements OnInit, OnDestroy  {
     this.comps.push(new CompItem(ColorComponent, undefined));
     this.comps.push(new CompItem(PointComponent, undefined));
     this.comps.push(new CompItem(ScaleComponent, undefined));
+
+    let initShape = new Shape("");
+    initShape.Id = GxUtils.NewGuid();
+    initShape.Type = -1;
+    initShape.Color = new Color(255,255,255,1);
+    initShape.Color.Value = "#ff00ff";
+    this.comps.push(new CompItem(ShapeComponent, initShape));
+
    }
 
   ngOnInit() {
@@ -60,12 +79,21 @@ export class HydraComponent implements OnInit, OnDestroy  {
 
             this.Conversation.push(new ChatMessage("", msg));
 
-            let hydraResponse = new ChatMessage("hydra-", "Please fill in the below details.");
+            let hydraResponse ;
+            this.shouldShowApplyButton = this.loadComponentByHint(msg);
+            if (this.shouldShowApplyButton)
+            {
+             hydraResponse = new ChatMessage("hydra-", "Please fill in the below details.");
+             this.Conversation.push(hydraResponse);
+             (document.querySelector("div[for='dyn-tmpl']") as HTMLDivElement).focus();
 
-            this.Conversation.push(hydraResponse);
-            this.loadComponentByHint(msg);
-            (document.querySelector("div[for='dyn-tmpl']") as HTMLDivElement).focus();
-            
+            }
+            else
+            {
+              hydraResponse = new ChatMessage("hydra-", "Sorry, didn't get that.");
+              this.Conversation.push(hydraResponse);
+            }
+
           }
 
           break;
@@ -96,17 +124,33 @@ export class HydraComponent implements OnInit, OnDestroy  {
     (<IComponent>componentRef.instance).data = compItem.data;
   }
 
-  loadComponentByHint(compHint: string)
+  loadComponentByHint(compHint: string): boolean
   {
-    let compItem = this.comps.filter(a => a.component.name.toLowerCase().indexOf(compHint) > -1)[0];
-
-    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(compItem.component);
-
     let viewContainerRef = this.dynHost.viewContainerRef;
     viewContainerRef.clear();
+    let compItems = this.comps.filter(a => a.component.name.toLowerCase().indexOf(compHint) > -1);
 
-    let componentRef = viewContainerRef.createComponent(componentFactory);
-    (<IComponent>componentRef.instance).data = compItem.data;
+    if (compItems.length == 0)
+    {
+      return false;
+    }
+    else
+    {
+      let compItem = compItems[0];
 
+      let componentFactory = this.componentFactoryResolver.resolveComponentFactory(compItem.component);
+
+      let componentRef = viewContainerRef.createComponent(componentFactory);
+      (<IComponent>componentRef.instance).data = compItem.data;
+      this.dynHostData = (<IComponent>componentRef.instance).data;
+
+      return true;
+    }
+
+  }
+
+  applyChanges()
+  {
+    this.arena.AddShape((this.dynHostData));
   }
 }

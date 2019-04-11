@@ -13,6 +13,7 @@ export class AngleComponent implements OnInit, IComponent {
   @Input() data: Angle = new Angle(0,0,0);
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
 }
