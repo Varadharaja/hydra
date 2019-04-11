@@ -1,18 +1,18 @@
 <div>
     <div>
        Color&nbsp;
-      <input type="color"  [(ngModel)]="data.Value" rgba/>
+      <span [ngStyle]="{'backgroundColor': 'rgb(' + data.red + ',' + data.green + ',' + data.blue + ')' }">&nbsp;</span>
     </div>
     <div>
       <label>Red</label>
-      <input type="range" min="0" max="360" [(ngModel)]="data.red"/>
-    </div>
-    <div>
-      <label>Blue</label>
-      <input type="range" min="0" max="360"  [(ngModel)]="data.green"/>
+      <input type="range" min="0" max="255" [(ngModel)]="data.red"/>
     </div>
     <div>
       <label>Green</label>
-      <input type="range" min="0" max="360"  [(ngModel)]="data.blue"/>
+      <input type="range" min="0" max="255"  [(ngModel)]="data.green"/>
+    </div>
+    <div>
+      <label>Blue</label>
+      <input type="range" min="0" max="255"  [(ngModel)]="data.blue"/>
     </div>
 </div>

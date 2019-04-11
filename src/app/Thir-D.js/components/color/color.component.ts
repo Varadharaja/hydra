@@ -15,4 +15,8 @@ export class ColorComponent implements OnInit, IComponent  {
   ngOnInit() {
   }
 
+  toHex(d: number) {
+    return  ("0"+(Number(d).toString(16))).slice(-2).toUpperCase()
+}
+
 }

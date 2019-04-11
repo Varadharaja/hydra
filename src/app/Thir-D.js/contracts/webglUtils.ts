@@ -3,21 +3,21 @@ import { GxUtils } from './gxUtils';
 
 export class WebglUtils
 {
-    canvas: any;
-    gl: any;
-    proj_matrix: any;
-    mov_matrix: any;
-    view_matrix: any;
-    Pmatrix: any;
-    Vmatrix: any;
-    Mmatrix: any;
-    index_buffer: any;
+    static canvas: any;
+    static gl: any;
+    static proj_matrix: any;
+    static mov_matrix: any;
+    static view_matrix: any;
+    static Pmatrix: any;
+    static Vmatrix: any;
+    static Mmatrix: any;
+    static index_buffer: any;
     indices: any;
     vertex_buffer: any;
     color_buffer: any;
-    verticesLength = 0;
-    doAnimate = false;
-    time_old = 0;
+    static verticesLength = 0;
+    static doAnimate = false;
+    static time_old = 0;
     VXS: any;
     CLRS: any;
     vertCode: any;
@@ -31,11 +31,11 @@ export class WebglUtils
     Initialize(canvasId: string)
     {
         /*============= Creating a canvas =================*/
-        this.canvas = document.getElementById(canvasId);
-        this.gl = this.canvas.getContext('webgl2');
-        this.vertex_buffer = this.gl.createBuffer ();
-        this.index_buffer = this.gl.createBuffer ();
-        this.color_buffer = this.gl.createBuffer ();
+        WebglUtils.canvas = document.getElementById(canvasId);
+        WebglUtils.gl = WebglUtils.canvas.getContext('webgl2');
+        this.vertex_buffer = WebglUtils.gl.createBuffer ();
+        WebglUtils.index_buffer = WebglUtils.gl.createBuffer ();
+        this.color_buffer = WebglUtils.gl.createBuffer ();
         /*=================== Shaders =========================*/
 
         this.vertCode = 'attribute vec3 position;'+
@@ -56,18 +56,18 @@ export class WebglUtils
             'gl_FragColor = vec4(vColor, 1.);'+
         '}';
 
-        this.vertShader = this.gl.createShader(this.gl.VERTEX_SHADER);
-        this.gl.shaderSource(this.vertShader, this.vertCode);
-        this.gl.compileShader(this.vertShader);
+        this.vertShader = WebglUtils.gl.createShader(WebglUtils.gl.VERTEX_SHADER);
+        WebglUtils.gl.shaderSource(this.vertShader, this.vertCode);
+        WebglUtils.gl.compileShader(this.vertShader);
 
-        this.fragShader = this.gl.createShader(this.gl.FRAGMENT_SHADER);
-        this.gl.shaderSource(this.fragShader, this.fragCode);
-        this.gl.compileShader(this.fragShader);
+        this.fragShader = WebglUtils.gl.createShader(WebglUtils.gl.FRAGMENT_SHADER);
+        WebglUtils.gl.shaderSource(this.fragShader, this.fragCode);
+        WebglUtils.gl.compileShader(this.fragShader);
 
-        this.shaderProgram = this.gl.createProgram();
-        this.gl.attachShader(this.shaderProgram, this.vertShader);
-        this.gl.attachShader(this.shaderProgram, this.fragShader);
-        this.gl.linkProgram(this.shaderProgram);
+        this.shaderProgram = WebglUtils.gl.createProgram();
+        WebglUtils.gl.attachShader(this.shaderProgram, this.vertShader);
+        WebglUtils.gl.attachShader(this.shaderProgram, this.fragShader);
+        WebglUtils.gl.linkProgram(this.shaderProgram);
 
     }
 
@@ -182,7 +182,7 @@ export class WebglUtils
             }
         }
         vertices = vxs;
-        this.verticesLength = vertices.length;
+        WebglUtils.verticesLength = vertices.length;
         
 
         /*============ Defining and storing the geometry =========*/
@@ -191,44 +191,44 @@ export class WebglUtils
         this.VXS = new Float32Array(vertices);
         this.CLRS = new Float32Array(colors);
         // Create and store data into vertex buffer
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertex_buffer);
-        this.gl.bufferData(this.gl.ARRAY_BUFFER, this.VXS , this.gl.STATIC_DRAW);
+        WebglUtils.gl.bindBuffer(WebglUtils.gl.ARRAY_BUFFER, this.vertex_buffer);
+        WebglUtils.gl.bufferData(WebglUtils.gl.ARRAY_BUFFER, this.VXS , WebglUtils.gl.STATIC_DRAW);
 
         // Create and store data into color buffer
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.color_buffer);
-        this.gl.bufferData(this.gl.ARRAY_BUFFER,this.CLRS , this.gl.STATIC_DRAW);
+        WebglUtils.gl.bindBuffer(WebglUtils.gl.ARRAY_BUFFER, this.color_buffer);
+        WebglUtils.gl.bufferData(WebglUtils.gl.ARRAY_BUFFER,this.CLRS , WebglUtils.gl.STATIC_DRAW);
 
         // Create and store data into index buffer
-        this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.index_buffer);
-        this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), this.gl.STATIC_DRAW);
+        WebglUtils.gl.bindBuffer(WebglUtils.gl.ELEMENT_ARRAY_BUFFER, WebglUtils.index_buffer);
+        WebglUtils.gl.bufferData(WebglUtils.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), WebglUtils.gl.STATIC_DRAW);
 
 
         /* ====== Associating attributes to vertex shader =====*/
-        this.Pmatrix = this.gl.getUniformLocation(this.shaderProgram, "Pmatrix");
-        this.Vmatrix = this.gl.getUniformLocation(this.shaderProgram, "Vmatrix");
-        this.Mmatrix = this.gl.getUniformLocation(this.shaderProgram, "Mmatrix");
+        WebglUtils.Pmatrix = WebglUtils.gl.getUniformLocation(this.shaderProgram, "Pmatrix");
+        WebglUtils.Vmatrix = WebglUtils.gl.getUniformLocation(this.shaderProgram, "Vmatrix");
+        WebglUtils.Mmatrix = WebglUtils.gl.getUniformLocation(this.shaderProgram, "Mmatrix");
 
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vertex_buffer);
-        let position = this.gl.getAttribLocation(this.shaderProgram, "position");
-        this.gl.vertexAttribPointer(position, 3, this.gl.FLOAT, false,0,0) ;
+        WebglUtils.gl.bindBuffer(WebglUtils.gl.ARRAY_BUFFER, this.vertex_buffer);
+        let position = WebglUtils.gl.getAttribLocation(this.shaderProgram, "position");
+        WebglUtils.gl.vertexAttribPointer(position, 3, WebglUtils.gl.FLOAT, false,0,0) ;
 
         // Position
-        this.gl.enableVertexAttribArray(position);
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.color_buffer);
-        let color = this.gl.getAttribLocation(this.shaderProgram, "color");
-        this.gl.vertexAttribPointer(color, 3, this.gl.FLOAT, false,0,0) ;
+        WebglUtils.gl.enableVertexAttribArray(position);
+        WebglUtils.gl.bindBuffer(WebglUtils.gl.ARRAY_BUFFER, this.color_buffer);
+        let color = WebglUtils.gl.getAttribLocation(this.shaderProgram, "color");
+        WebglUtils.gl.vertexAttribPointer(color, 3, WebglUtils.gl.FLOAT, false,0,0) ;
 
         // Color
-        this.gl.enableVertexAttribArray(color);
-        this.gl.useProgram(this.shaderProgram);
+        WebglUtils.gl.enableVertexAttribArray(color);
+        WebglUtils.gl.useProgram(this.shaderProgram);
 
-        this.proj_matrix = this.get_projection(45, this.canvas.width/this.canvas.height, 1, 1000);
+        WebglUtils.proj_matrix = this.get_projection(45, WebglUtils.canvas.width/WebglUtils.canvas.height, 1, 1000);
 
-        this.mov_matrix = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
-        this.view_matrix = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
+        WebglUtils.mov_matrix = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
+        WebglUtils.view_matrix = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
 
         // translating z
-        this.view_matrix[14] = this.view_matrix[14]-6;//zoom
+        WebglUtils.view_matrix[14] = WebglUtils.view_matrix[14]-6;//zoom
 
     }
         /*==================== MATRIX =====================*/
@@ -246,7 +246,7 @@ export class WebglUtils
 
         /*==================== Rotation ====================*/
 
-        rotateZ(m: any, angle: number) {
+        static rotateZ(m: any, angle: number) {
            let c = Math.cos(angle);
            let s = Math.sin(angle);
            let mv0 = m[0], mv4 = m[4], mv8 = m[8];
@@ -260,7 +260,7 @@ export class WebglUtils
            m[9]=c*m[9]+s*mv8;
         }
 
-        rotateX(m: any, angle: number) {
+        static rotateX(m: any, angle: number) {
            let c = Math.cos(angle);
            let s = Math.sin(angle);
            let mv1 = m[1], mv5 = m[5], mv9 = m[9];
@@ -274,7 +274,7 @@ export class WebglUtils
            m[10] = m[10]*c+mv9*s;
         }
 
-        rotateY(m: any, angle: number) {
+        static rotateY(m: any, angle: number) {
            let c = Math.cos(angle);
            let s = Math.sin(angle);
            let mv0 = m[0], mv4 = m[4], mv8 = m[8];
@@ -290,25 +290,25 @@ export class WebglUtils
 
         /*================= Drawing ===========================*/
 
-        animate(time: number) {
-            if (this.doAnimate)
+        static animate(time: number) {
+            if (WebglUtils.doAnimate)
             {
-                let dt = time-this.time_old;
-                this.time_old = time;
+                let dt = time-WebglUtils.time_old;
+                WebglUtils.time_old = time;
 
-                this.gl.enable(this.gl.DEPTH_TEST);
-                this.gl.depthFunc(this.gl.LEQUAL);
-                this.gl.clearColor(1, 1, 1, 1);
-                this.gl.clearDepth(1.0);
+                WebglUtils.gl.enable(WebglUtils.gl.DEPTH_TEST);
+                WebglUtils.gl.depthFunc(WebglUtils.gl.LEQUAL);
+                WebglUtils.gl.clearColor(1, 1, 1, 1);
+                WebglUtils.gl.clearDepth(1.0);
 
-                this.gl.viewport(0.0, 0.0, this.canvas.width, this.canvas.height);
-                this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-                this.gl.uniformMatrix4fv(this.Pmatrix, false, this.proj_matrix);
-                this.gl.uniformMatrix4fv(this.Vmatrix, false, this.view_matrix);
-                this.gl.uniformMatrix4fv(this.Mmatrix, false, this.mov_matrix);
-                this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, this.index_buffer);
-                this.gl.drawArrays(this.gl.TRIANGLES,0,this.verticesLength/3);
-                window.requestAnimationFrame(this.animate);
+                WebglUtils.gl.viewport(0.0, 0.0, WebglUtils.canvas.width, WebglUtils.canvas.height);
+                WebglUtils.gl.clear(WebglUtils.gl.COLOR_BUFFER_BIT | WebglUtils.gl.DEPTH_BUFFER_BIT);
+                WebglUtils.gl.uniformMatrix4fv(WebglUtils.Pmatrix, false, WebglUtils.proj_matrix);
+                WebglUtils.gl.uniformMatrix4fv(WebglUtils.Vmatrix, false, WebglUtils.view_matrix);
+                WebglUtils.gl.uniformMatrix4fv(WebglUtils.Mmatrix, false, WebglUtils.mov_matrix);
+                WebglUtils.gl.bindBuffer(WebglUtils.gl.ELEMENT_ARRAY_BUFFER, WebglUtils.index_buffer);
+                WebglUtils.gl.drawArrays(WebglUtils.gl.TRIANGLES,0,WebglUtils.verticesLength/3);
+                window.requestAnimationFrame(WebglUtils.animate);
             }
         }
 

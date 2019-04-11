@@ -14,19 +14,53 @@ export class ArenaComponent implements OnInit {
   webglUtils: WebglUtils = new WebglUtils();
 
   constructor() {
+
     
-   
-   }
+
+    document.onkeydown = function(e) {
+     //WebglUtils.doAnimate = true;
+            switch (e.keyCode) {
+
+          case 37:
+            WebglUtils.rotateY(WebglUtils.mov_matrix,0.01);
+              //alert('left');
+              break;
+          case 38:
+              //alert('up');
+              WebglUtils.view_matrix[14]+=0.05;
+              break;
+          case 39:
+              WebglUtils.rotateY(WebglUtils.mov_matrix, -0.01);
+          break;
+          case 40:
+              //alert('down');
+              WebglUtils.view_matrix[14]-=0.05;
+              break;
+      }
+      //WebglUtils.doAnimate = false;
+  };
+
+  }
 
   ngOnInit() {
+   
   }
 
   AddShape(shape: IShape)
   {
-    if (this.webglUtils.canvas == null)
+    if (WebglUtils.canvas == null)
     {
       this.webglUtils.Initialize("glcanvas");
-    }
+      WebglUtils.animate(0);
+
+      WebglUtils.canvas.onclick = function(e:any){
+        WebglUtils.doAnimate = !WebglUtils.doAnimate;
+        if (WebglUtils.doAnimate)
+        {
+            WebglUtils.animate(WebglUtils.time_old);
+        }
+    };
+    } 
 
     switch(Number(shape.Type))
     {
@@ -37,9 +71,10 @@ export class ArenaComponent implements OnInit {
       cbe.SetPlanes();
 
       this.webglUtils.SetWebGLParams(cbe.Planes);
-      this.webglUtils.doAnimate = true;
-      this.webglUtils.animate(0);
-      this.webglUtils.doAnimate = true;
+      WebglUtils.doAnimate = true;
+      WebglUtils.animate(0);
+      WebglUtils.doAnimate = true;
+      
 
       break;
       case ShapeTypes.POLYGON:
