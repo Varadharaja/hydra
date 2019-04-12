@@ -1,0 +1,113 @@
+{
+    "Name": "Third-js Goal Tree",
+    "Goals":
+    [
+        {
+            "Id": "START",
+            "Name": "Start Goal",
+            "Description": "Root level of  Thir-D.js goal tree"
+        },
+        {
+            "Id": "NEW_SHP",
+            "Name": "New Shape",
+            "Description": "Create a new shape",
+            "nGrams": ["new","create", "insert"]
+        },
+        {
+            "Id": "LST_SHP",
+            "Name": "List Shapes",
+            "Description": "Lists all the shapes that are part of the given session or already saved from prior sessions",
+            "nGrams": ["shapes","show all", "list all"],
+            "ActionHint": "",
+            "Prerequisites": ["START"]
+        },
+        {
+            "Id": "SEL_SHP",
+            "Name": "Select Shape",
+            "Description": "Select a shape directly with the shape name or select from the list of shapes",
+            "nGrams": ["select"],
+            "ActionHint": "",
+            "Prerequisites": ["LST_SHP","NEW_SHP"]
+        },
+        {
+            "Id": "DEL_SHP",
+            "Name": "Delete Shape",
+            "Description": "Delete the selected shape",
+            "nGrams": ["delete","remove"],
+            "ActionHint": "",
+            "Prerequisites": ["SEL_SHP"]
+        },
+        {
+            "Id": "CP_SHP",
+            "Name": "Copy Shape",
+            "Description": "Copy the selected shape",
+            "nGrams": ["copy","clone"],
+            "ActionHint": "",
+            "Prerequisites": ["SEL_SHP"]
+        },
+        {
+            "Id": "CHG_SPC_CHARS",
+            "Name": "Change specific characteristics",
+            "Description": "Change specific characteristics of the given shape",
+            "nGrams": ["specific","change","features"],
+            "ActionHint": "",
+            "Prerequisites": ["SEL_SHP"]
+        },
+        {
+            "Id": "CHG_CBE_CHARS",
+            "Name": "Change Cube characteristics",
+            "Description": "Change specific characteristics of the given cube",
+            "nGrams": ["specific","change","features","cube"],
+            "ActionHint": "",
+            "Prerequisites": ["CHG_SPC_CHARS"]
+        },        
+        {
+            "Id": "CHG_SPH_CHARS",
+            "Name": "Change Sphere characteristics",
+            "Description": "Change specific characteristics of the given sphere",
+            "nGrams": ["specific","change","features","sphere"],
+            "ActionHint": "",
+            "Prerequisites": ["CHG_SPC_CHARS"]
+        },
+        {
+            "Id": "CHG_PLY_CHARS",
+            "Name": "Change Polygon characteristics",
+            "Description": "Change specific characteristics of the given polygon",
+            "nGrams": ["specific","change","features","sphere"],
+            "ActionHint": "",
+            "Prerequisites": ["CHG_PLY_CHARS"]
+        },
+        {
+            "Id": "CHG_GEN_CHARS",
+            "Name": "Change general characteristics",
+            "Description": "Change general characteristics of the given shape",
+            "nGrams": ["general","change","features"],
+            "ActionHint": "",
+            "Prerequisites": ["SEL_SHP"]
+        },
+        {
+            "Id": "CHG_SCL",
+            "Name": "Change scale",
+            "Description": "Change scale of the given shape",
+            "nGrams": ["change","scale"],
+            "ActionHint": "",
+            "Prerequisites": ["CHG_GEN_CHARS"]
+        },
+        {
+            "Id": "CHG_ROT_ANG",
+            "Name": "Change rotation",
+            "Description": "Change rotation angles of the given shape",
+            "nGrams": ["change","rotate"],
+            "ActionHint": "",
+            "Prerequisites": ["CHG_GEN_CHARS"]
+        },
+        {
+            "Id": "CHG_TRSL",
+            "Name": "Change translation",
+            "Description": "Change translation point of the given shape",
+            "nGrams": ["move","translate"],
+            "ActionHint": "",
+            "Prerequisites": ["CHG_GEN_CHARS"]
+        }
+    ]
+}
