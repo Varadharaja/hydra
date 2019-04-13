@@ -20,10 +20,4 @@ export class Hydra
     // stack trace - ? to move back or forth
     
     // process incoming message
-
-    
-
-
-
-
 }

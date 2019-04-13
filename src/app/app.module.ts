@@ -12,6 +12,7 @@ import { DynamicDirective } from './dynamic.directive';
 import { ChatMessage } from './Thir-D.js/contracts/chatmessage';
 import { ShapeComponent } from './Thir-D.js/components/shape/shape.component';
 import { ArenaComponent } from './Thir-D.js/components/arena/arena.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ArenaComponent } from './Thir-D.js/components/arena/arena.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   entryComponents: [
     AngleComponent,

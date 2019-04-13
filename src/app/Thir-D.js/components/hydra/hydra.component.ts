@@ -14,6 +14,8 @@ import { GxUtils } from '../../contracts/gxUtils';
 import { Color } from '../../contracts/color';
 import { ArenaComponent } from '../arena/arena.component';
 import * as ng from "angular";
+import { HydraApiService } from './hydra-api.service';
+import { HydraContext } from './hydraContext';
 
 
 @Component({
@@ -22,7 +24,8 @@ import * as ng from "angular";
   styleUrls: ['./hydra.component.css']
 })
 export class HydraComponent implements OnInit, OnDestroy  {
-
+  
+  context: HydraContext = new HydraContext(); 
   arena: ArenaComponent = new ArenaComponent();
   shouldShowApplyButton: boolean = false;
   comps: CompItem[] = new Array();
@@ -35,7 +38,10 @@ export class HydraComponent implements OnInit, OnDestroy  {
 
   UserMessage: string = "";
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private hydraService: HydraApiService, private componentFactoryResolver: ComponentFactoryResolver) {
+
+    this.context.currentGoalId = "START";
+
     let newMessage = new ChatMessage("hydra-", "Hello Guest User") ;
 
     this.Conversation.push(newMessage);
@@ -111,6 +117,11 @@ export class HydraComponent implements OnInit, OnDestroy  {
     }
   }
 
+  GetNextGoals()
+  {
+    
+  }
+
   processMessage()
   {
     //  list shapes
@@ -141,6 +152,8 @@ export class HydraComponent implements OnInit, OnDestroy  {
 
   loadComponentByHint(compHint: string): boolean
   {
+
+    this.hydraService.getGoals().forEach(m=> console.log(m));
     let viewContainerRef = this.dynHost.viewContainerRef;
     viewContainerRef.clear();
     let compItems = this.comps.filter(a => a.component.name.toLowerCase().indexOf(compHint) > -1);
