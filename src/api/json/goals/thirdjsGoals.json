@@ -21,7 +21,8 @@
             "Description": "Create a new shape",
             "nGrams": ["new","create", "insert"],
             "Prerequisites": ["START"],
-            "ActionHint": "loadComponentByHint('shape')"
+            "ActionHint": "loadComponentByHint('shape')",
+            "PostProcess": "arena.AddShape"
         },
         {
             "Id": "UNDO",
@@ -51,7 +52,7 @@
             "Description": "Select a shape directly with the shape name or select from the list of shapes",
             "nGrams": ["select"],
             "ActionHint": "",
-            "Prerequisites": ["LST_SHP","NEW_SHP"]
+            "Prerequisites": ["LST_SHP"]
         },
         {
             "Id": "DEL_SHP",
@@ -59,7 +60,7 @@
             "Description": "Delete the selected shape",
             "nGrams": ["delete","remove"],
             "ActionHint": "",
-            "Prerequisites": ["SEL_SHP"]
+            "Prerequisites": ["SEL_SHP","NEW_SHP"]
         },
         {
             "Id": "CP_SHP",
@@ -67,7 +68,7 @@
             "Description": "Copy the selected shape",
             "nGrams": ["copy","clone"],
             "ActionHint": "",
-            "Prerequisites": ["SEL_SHP"]
+            "Prerequisites": ["SEL_SHP","NEW_SHP"]
         },
         {
             "Id": "CHG_SPC_CHARS",
@@ -75,7 +76,7 @@
             "Description": "Change specific characteristics of the given shape",
             "nGrams": ["specific","change","features"],
             "ActionHint": "",
-            "Prerequisites": ["SEL_SHP"]
+            "Prerequisites": ["SEL_SHP","NEW_SHP"]
         },
         {
             "Id": "CHG_CBE_CHARS",
@@ -107,14 +108,14 @@
             "Description": "Change general characteristics of the given shape",
             "nGrams": ["general","change","features"],
             "ActionHint": "",
-            "Prerequisites": ["SEL_SHP"]
+            "Prerequisites": ["SEL_SHP","NEW_SHP"]
         },
         {
             "Id": "CHG_SCL",
             "Name": "Change scale",
             "Description": "Change scale of the given shape",
             "nGrams": ["change","scale"],
-            "ActionHint": "",
+            "ActionHint": "loadComponentByHint('scale')",
             "Prerequisites": ["CHG_GEN_CHARS"]
         },
         {
@@ -122,7 +123,7 @@
             "Name": "Change rotation",
             "Description": "Change rotation angles of the given shape",
             "nGrams": ["change","rotate"],
-            "ActionHint": "",
+            "ActionHint": "loadComponentByHint('angle')",
             "Prerequisites": ["CHG_GEN_CHARS"]
         },
         {
@@ -130,7 +131,7 @@
             "Name": "Change translation",
             "Description": "Change translation point of the given shape",
             "nGrams": ["move","translate"],
-            "ActionHint": "",
+            "ActionHint": "loadComponentByHint('point')",
             "Prerequisites": ["CHG_GEN_CHARS"]
         }
     ]

@@ -21,5 +21,7 @@ export class Goal
     // Define an actionable Hint for this current goal 
     ActionHint: string;
 
+    // Post Process
+    PostProcess: string;
 
 }

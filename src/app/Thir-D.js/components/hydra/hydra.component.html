@@ -48,15 +48,15 @@
         <path d="M100 100 L120 120 L280 120 L300 100 Z"  style="fill:white; filter:url(#dropshadow);"/>
 
     </g>
-    <!--<g for="console"  transform="translate(0 650)">
+    <g for="console"  transform="translate(0 650)">
         <path d="M0 25 L25 0 L450 0 L475 25 L450 50 L25 50 Z"  style="fill:white; filter:url(#dropshadow);"/>  
-   </g>-->
+   </g>
    <g>
      <text class="medium" x="150" y="30">Chat with Hydra</text>
    </g>
 </svg>
-<div style="position: absolute; top:50px; left: 50px; width: 22vw; height: 50vh; overflow-y: scroll"> 
-    <div *ngFor="let conv of Conversation"> 
+<div style="position: absolute; top:50px; left: 50px; width: 22vw; height: 50vh; overflow-y: scroll" for="chat-scroll-div"> 
+    <div *ngFor="let conv of Conversation; let idx = index"> 
         <table>
           <tr>
             <td>
@@ -70,9 +70,10 @@
           </tr>
           <tr>
             <td>  </td>
-            <td colspan="2">
-                <div *ngFor="let goal of conv.Goals"> 
-                    - <a href='#' title="{{goal.Description}}" (click)="ProcessGoal(goal.ActionHint, goal.Name)"> <i>{{goal.Name}}</i></a>
+            <td colspan="2" >
+                <div *ngFor="let goal of conv.Goals;"> 
+                    - <a href='#' *ngIf="idx == Conversation.length-1" title="{{goal.Description}}" (click)="ProcessGoal(goal);"> <i>{{goal.Name}}</i></a>
+                    <span  *ngIf="idx < Conversation.length-1" ><i>{{goal.Name}}</i></span>
                     <div>
                         &nbsp;
                     </div>
@@ -86,13 +87,17 @@
     <div for="dyn-tmpl" tabindex="1">
         <ng-template dyn-host></ng-template>
         <br/>
-        <button *ngIf="shouldShowApplyButton == true" (click)="applyChanges()">Apply</button>
+        <div style="text-align:left">
+            <button *ngIf="shouldShowApplyButton == true" (click)="applyChanges()">Apply</button>
+            <button *ngIf="shouldShowApplyButton == true" >Cancel</button>
+
+        </div>
       </div>
 
 
 </div>
 
 
-<!--<input type="text"  placeholder="Please type your message here..." style="position: absolute; top:69vh; left:30px; width: 22vw;border: none;font: italic 13px sans-serif;outline: none" (keypress)="OnKeyPress($event)"  (keydown)="OnKeyDown($event)" for="chat-msg"/>-->
+<input type="text" disabled  placeholder="Chat option will be enabled sooner..." style="position: absolute; top:69vh; left:30px; width: 22vw;border: none;font: italic 13px sans-serif;outline: none" (keypress)="OnKeyPress($event)"  (keydown)="OnKeyDown($event)" for="chat-msg"/>
 
 </div>

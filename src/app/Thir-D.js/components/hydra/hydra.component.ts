@@ -16,6 +16,7 @@ import { ArenaComponent } from '../arena/arena.component';
 import * as ng from "angular";
 import { HydraApiService } from './hydra-api.service';
 import { HydraContext } from './hydraContext';
+import { Goal } from '../../contracts/goal';
 
 
 @Component({
@@ -91,7 +92,7 @@ export class HydraComponent implements OnInit, OnDestroy  {
             if (this.shouldShowApplyButton)
             {
              hydraResponse = new ChatMessage("hydra-", "Please fill in the below details.");
-             this.Conversation.push(hydraResponse);
+             this.Conversation.push(hydraResponse); 
              (document.querySelector("div[for='dyn-tmpl']") as HTMLDivElement).focus();
 
             }
@@ -121,25 +122,34 @@ export class HydraComponent implements OnInit, OnDestroy  {
   GetNextGoals()
   {
     this.hydraService.getGoals(this.context.currentGoalId).forEach(m=>{
+      if (m != null && m.length > 0)
+      {
+        this.Conversation.push(new ChatMessage("hydra-", "Please choose any of the below options:", m));
+      }
+      else
+      {
+        this.Conversation.push(new ChatMessage("hydra-", "Sorry, not able to process your request"));
 
-      this.Conversation.push(new ChatMessage("hydra-", "Please any of the below options:", m));
+      }
 
     });
   }
 
-  ProcessGoal(actionHint: string, goalName: string)
+  ProcessGoal(goal: Goal)
   {
-    this.Conversation.push(new ChatMessage("", "You have opted to " + goalName.toLowerCase() ));
+    this.context.currentGoalId = goal.Id; 
+    this.context.currentGoal = JSON.parse(JSON.stringify(goal));
+    this.Conversation.push(new ChatMessage("", "You have opted to " + goal.Name.toLowerCase() ));
 
-    if (actionHint != "")
+    if (goal.ActionHint != "")
     {
       this.Conversation.push(new ChatMessage("hydra-", "Please fill in the below details"));
 
-      this.shouldShowApplyButton = eval('this.' + actionHint);
+      this.shouldShowApplyButton = eval('this.' + goal.ActionHint);
     }
     else
     {
-      this.Conversation.push(new ChatMessage("hydra-", "Sorry, not able to process your request"));
+      this.GetNextGoals();
 
     }
   }
@@ -201,6 +211,15 @@ export class HydraComponent implements OnInit, OnDestroy  {
 
   applyChanges()
   {
-    this.arena.AddShape((this.dynHostData));
+    // Post Process event of the goal
+   eval('this.' +  this.context.currentGoal.PostProcess + "(this.dynHostData)");
+
+    let viewContainerRef = this.dynHost.viewContainerRef;
+    viewContainerRef.clear();
+    this.shouldShowApplyButton =false;
+
+    this.Conversation.push(new ChatMessage("", "Your changes to " + this.context.currentGoal.Name.toLocaleLowerCase() + " are applied."));
+    
+    this.GetNextGoals();
   }
 }

@@ -18,6 +18,7 @@ export class ArenaComponent implements OnInit {
 
   webglUtils: WebglUtils = new WebglUtils();
   shapes: IShape[] = new Array();
+  selectedShapeId: string = "";
   constructor() {
 
     
@@ -48,11 +49,12 @@ export class ArenaComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+
   }
 
   AddShape(shape: IShape)
   {
+
     if (WebglUtils.canvas == null)
     {
       this.webglUtils.Initialize("glcanvas");
@@ -64,7 +66,7 @@ export class ArenaComponent implements OnInit {
         {
             WebglUtils.animate(WebglUtils.time_old);
         }
-    };
+      };
     } 
 
     switch(Number(shape.Type))
@@ -92,6 +94,8 @@ export class ArenaComponent implements OnInit {
       break;
 
     }
+
+    this.selectedShapeId = shape.Id;
 
   }
 
