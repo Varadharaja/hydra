@@ -8,10 +8,34 @@
             "Description": "Root level of  Thir-D.js goal tree"
         },
         {
+            "Id": "LOAD_PRJ",
+            "Name": "Load existing Project",
+            "Description": "Load project",
+            "nGrams": ["load"],
+            "Prerequisites": ["START"],
+            "ActionHint": ""
+        },
+        {
             "Id": "NEW_SHP",
-            "Name": "New Shape",
+            "Name": "Insert New Shape",
             "Description": "Create a new shape",
-            "nGrams": ["new","create", "insert"]
+            "nGrams": ["new","create", "insert"],
+            "Prerequisites": ["START"],
+            "ActionHint": "loadComponentByHint('shape')"
+        },
+        {
+            "Id": "UNDO",
+            "Name": "Undo recent change",
+            "Description": "Undo the last change",
+            "nGrams": ["undo"],
+            "Prerequisites": ["START"]
+        },
+        {
+            "Id": "SAVE",
+            "Name": "Save project",
+            "Description": "Save the changes",
+            "nGrams": ["save"],
+            "Prerequisites": ["START"]
         },
         {
             "Id": "LST_SHP",

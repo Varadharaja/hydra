@@ -48,10 +48,9 @@
         <path d="M100 100 L120 120 L280 120 L300 100 Z"  style="fill:white; filter:url(#dropshadow);"/>
 
     </g>
-    <g for="console"  transform="translate(0 650)">
+    <!--<g for="console"  transform="translate(0 650)">
         <path d="M0 25 L25 0 L450 0 L475 25 L450 50 L25 50 Z"  style="fill:white; filter:url(#dropshadow);"/>  
-        <!-- <text x="40" y="30" class="small" onclick="startChat()" id="chatTxtMessage">Please type your message here... </text> -->
-   </g>
+   </g>-->
    <g>
      <text class="medium" x="150" y="30">Chat with Hydra</text>
    </g>
@@ -66,21 +65,34 @@
             <td>
                 <span *ngIf="conv.UserName == 'hydra-'" style="font: italic 13px sans-serif; color:white;">{{conv.Message}}</span>
                 <span *ngIf="conv.UserName == ''" style="font: italic 13px sans-serif; color:black">{{conv.Message}}</span>
+ 
             </td>
           </tr>
+          <tr>
+            <td>  </td>
+            <td colspan="2">
+                <div *ngFor="let goal of conv.Goals"> 
+                    - <a href='#' title="{{goal.Description}}" (click)="ProcessGoal(goal.ActionHint, goal.Name)"> <i>{{goal.Name}}</i></a>
+                    <div>
+                        &nbsp;
+                    </div>
+                </div>
+            </td>
+          </tr>
+          
         </table>
 
     </div>
     <div for="dyn-tmpl" tabindex="1">
         <ng-template dyn-host></ng-template>
         <br/>
-        <button *ngIf="shouldShowApplyButton == true" (click)="applyChanges()" >Apply</button>
+        <button *ngIf="shouldShowApplyButton == true" (click)="applyChanges()">Apply</button>
       </div>
 
 
 </div>
 
 
-<input type="text"  placeholder="Please type your message here..." style="position: absolute; top:69vh; left:30px; width: 22vw;border: none;font: italic 13px sans-serif;outline: none" (keypress)="OnKeyPress($event)"  (keydown)="OnKeyDown($event)" for="chat-msg"/>
+<!--<input type="text"  placeholder="Please type your message here..." style="position: absolute; top:69vh; left:30px; width: 22vw;border: none;font: italic 13px sans-serif;outline: none" (keypress)="OnKeyPress($event)"  (keydown)="OnKeyDown($event)" for="chat-msg"/>-->
 
 </div>

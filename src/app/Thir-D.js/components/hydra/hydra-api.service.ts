@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpHandler } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Goal } from '../../contracts/goal';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -13,8 +14,8 @@ export class HydraApiService {
 
   constructor( private http: HttpClient) { }
 
-  getGoals()
+  getGoals(goalId: string)
   {
-    return this.http.get<string>(this.apiUrl);
+    return this.http.get<Goal[]>(this.apiUrl + "?goalId=" + goalId) ;
   }
 }

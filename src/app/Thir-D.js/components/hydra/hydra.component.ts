@@ -45,6 +45,7 @@ export class HydraComponent implements OnInit, OnDestroy  {
     let newMessage = new ChatMessage("hydra-", "Hello Guest User") ;
 
     this.Conversation.push(newMessage);
+    this.GetNextGoals();
 
     this.comps.push(new CompItem(AngleComponent, undefined));
     this.comps.push(new CompItem(ColorComponent, undefined));
@@ -119,8 +120,30 @@ export class HydraComponent implements OnInit, OnDestroy  {
 
   GetNextGoals()
   {
-    
+    this.hydraService.getGoals(this.context.currentGoalId).forEach(m=>{
+
+      this.Conversation.push(new ChatMessage("hydra-", "Please any of the below options:", m));
+
+    });
   }
+
+  ProcessGoal(actionHint: string, goalName: string)
+  {
+    this.Conversation.push(new ChatMessage("", "You have opted to " + goalName.toLowerCase() ));
+
+    if (actionHint != "")
+    {
+      this.Conversation.push(new ChatMessage("hydra-", "Please fill in the below details"));
+
+      this.shouldShowApplyButton = eval('this.' + actionHint);
+    }
+    else
+    {
+      this.Conversation.push(new ChatMessage("hydra-", "Sorry, not able to process your request"));
+
+    }
+  }
+
 
   processMessage()
   {
@@ -133,7 +156,7 @@ export class HydraComponent implements OnInit, OnDestroy  {
     //  Scale the object
     //  Keeping the context of which shape is under consideration
     //  Load previously saved shapes
-    // Repeated tasks like workflows eg., move object 1 to the right of object2, place object 1 on top of obj2, etc., 
+    // Repeated tasks like workflows eg., move object 1 to the right of object2, place object 1 on top of obj2, etc.,
 
   }
 
@@ -153,7 +176,6 @@ export class HydraComponent implements OnInit, OnDestroy  {
   loadComponentByHint(compHint: string): boolean
   {
 
-    this.hydraService.getGoals().forEach(m=> console.log(m));
     let viewContainerRef = this.dynHost.viewContainerRef;
     viewContainerRef.clear();
     let compItems = this.comps.filter(a => a.component.name.toLowerCase().indexOf(compHint) > -1);
