@@ -24,4 +24,7 @@ export class Goal
     // Post Process
     PostProcess: string;
 
+    // Pre Process
+    PreProcess: string;
+
 }

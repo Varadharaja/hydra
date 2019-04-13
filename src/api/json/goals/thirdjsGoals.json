@@ -115,8 +115,10 @@
             "Name": "Change scale",
             "Description": "Change scale of the given shape",
             "nGrams": ["change","scale"],
+            "PreProcess": "arena.GetSelectedShapeInfo",
             "ActionHint": "loadComponentByHint('scale')",
-            "Prerequisites": ["CHG_GEN_CHARS"]
+            "Prerequisites": ["CHG_GEN_CHARS"],
+            "PostProcess": "arena.ChangeScale"
         },
         {
             "Id": "CHG_ROT_ANG",
@@ -124,7 +126,9 @@
             "Description": "Change rotation angles of the given shape",
             "nGrams": ["change","rotate"],
             "ActionHint": "loadComponentByHint('angle')",
-            "Prerequisites": ["CHG_GEN_CHARS"]
+            "Prerequisites": ["CHG_GEN_CHARS"],
+            "PostProcess": "arena.ChangeRotation"
+
         },
         {
             "Id": "CHG_TRSL",
@@ -132,7 +136,8 @@
             "Description": "Change translation point of the given shape",
             "nGrams": ["move","translate"],
             "ActionHint": "loadComponentByHint('point')",
-            "Prerequisites": ["CHG_GEN_CHARS"]
+            "Prerequisites": ["CHG_GEN_CHARS"],
+            "PostProcess": "arena.ChangeTranslation"
         }
     ]
 }

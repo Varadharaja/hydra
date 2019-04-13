@@ -17,6 +17,8 @@ import * as ng from "angular";
 import { HydraApiService } from './hydra-api.service';
 import { HydraContext } from './hydraContext';
 import { Goal } from '../../contracts/goal';
+import { Scale } from '../../contracts/scale';
+import { Point } from '../../contracts/point';
 
 
 @Component({
@@ -48,10 +50,10 @@ export class HydraComponent implements OnInit, OnDestroy  {
     this.Conversation.push(newMessage);
     this.GetNextGoals();
 
-    this.comps.push(new CompItem(AngleComponent, undefined));
-    this.comps.push(new CompItem(ColorComponent, undefined));
-    this.comps.push(new CompItem(PointComponent, undefined));
-    this.comps.push(new CompItem(ScaleComponent, undefined));
+    this.comps.push(new CompItem(AngleComponent, new Angle(0,0,0)));
+    this.comps.push(new CompItem(ColorComponent, new Color(255,255,255)));
+    this.comps.push(new CompItem(PointComponent, new Point(0,0,0)));
+    this.comps.push(new CompItem(ScaleComponent, new Scale(1,1,1)));
 
     let initShape = new Shape("");
     initShape.Id = GxUtils.NewGuid();
@@ -186,6 +188,7 @@ export class HydraComponent implements OnInit, OnDestroy  {
   loadComponentByHint(compHint: string): boolean
   {
 
+
     let viewContainerRef = this.dynHost.viewContainerRef;
     viewContainerRef.clear();
     let compItems = this.comps.filter(a => a.component.name.toLowerCase().indexOf(compHint) > -1);
@@ -201,13 +204,31 @@ export class HydraComponent implements OnInit, OnDestroy  {
       let componentFactory = this.componentFactoryResolver.resolveComponentFactory(compItem.component);
 
       let componentRef = viewContainerRef.createComponent(componentFactory);
-      (<IComponent>componentRef.instance).data = compItem.data;
-      this.dynHostData = (<IComponent>componentRef.instance).data;
+      let inputType = compItem.data.constructor.name;
+
+      if (this.context.currentGoal.PreProcess != null)
+      {
+        let compData: any;
+
+        eval("compData=this." + this.context.currentGoal.PreProcess + "('"+ compHint +"')");
+
+        (<IComponent>componentRef.instance).data = compData;
+        this.dynHostData = (<IComponent>componentRef.instance).data;
+
+      }
+      else
+      {
+        (<IComponent>componentRef.instance).data = compItem.data;
+        this.dynHostData = (<IComponent>componentRef.instance).data;
+      }
+
 
       return true;
     }
 
   }
+
+
 
   applyChanges()
   {
