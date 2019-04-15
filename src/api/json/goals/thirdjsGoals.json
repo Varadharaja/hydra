@@ -103,12 +103,13 @@
             "Prerequisites": ["CHG_PLY_CHARS"]
         },
         {
-            "Id": "CHG_GEN_CHARS",
-            "Name": "Change general characteristics",
-            "Description": "Change general characteristics of the given shape",
+            "Id": "CHG_CMN_CHARS",
+            "Name": "Change common characteristics",
+            "Description": "Change common characteristics of the given shape",
             "nGrams": ["general","change","features"],
-            "ActionHint": "",
-            "Prerequisites": ["SEL_SHP","NEW_SHP"]
+            "ActionHint": "loadComponentByHint('transformation')",
+            "Prerequisites": ["SEL_SHP","NEW_SHP"],
+            "PostProcess": "arena.ChangeTransformation"
         },
         {
             "Id": "CHG_SCL",

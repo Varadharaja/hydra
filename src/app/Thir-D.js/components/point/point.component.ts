@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Point } from '../../contracts/point';
 import { IComponent } from 'src/app/IComponent';
 
@@ -8,12 +8,18 @@ import { IComponent } from 'src/app/IComponent';
   styleUrls: ['./point.component.css']
 })
 export class PointComponent implements OnInit,IComponent {
+  @Input()
+  parent: any;
 
-  data: Point = new Point(0, 0, 0);
+  @Input()
+  data: Point = new Point(0,0,0);
 
-  constructor() { }
+  constructor() { 
+
+  }
 
   ngOnInit() {
+
   }
 
 }

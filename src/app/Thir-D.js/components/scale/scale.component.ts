@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Scale } from '../../contracts/scale';
 import { IComponent } from 'src/app/IComponent';
 
@@ -8,8 +8,11 @@ import { IComponent } from 'src/app/IComponent';
   styleUrls: ['./scale.component.css']
 })
 export class ScaleComponent implements OnInit, IComponent {
-
-  data: Scale = new Scale(1, 1, 1);
+  @Input()
+  parent: any;
+  
+  @Input()
+  data: Scale;
   constructor() { }
 
   ngOnInit() {

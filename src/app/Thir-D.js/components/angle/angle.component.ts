@@ -10,6 +10,9 @@ import { IComponent } from 'src/app/IComponent';
 })
 export class AngleComponent implements OnInit, IComponent {
 
+  @Input()
+  parent: any;
+
   @Input() data: Angle = new Angle(0,0,0);
   constructor() { }
 

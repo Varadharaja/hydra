@@ -2,14 +2,17 @@
     <i>Please enter point coordinates</i>
     <div>
       <label>X</label>
-      <input type="number" [(ngModel)]="data.x"/>
+      <input type="number" [(ngModel)]="data.x" (change)="parent.applyChangesOnTriggerFromChild()" step="0.02"/>
+      <!--<input type="number" [(ngModel)]="data.x"  step="0.01"/>-->
     </div>
     <div>
       <label>Y</label>
-      <input type="number" [(ngModel)]="data.y"/>
+      <input type="number" [(ngModel)]="data.y" (change)="parent.applyChangesOnTriggerFromChild()" step="0.02"/>
+      <!--<input type="number" [(ngModel)]="data.y"  step="0.01"/>-->
     </div>
     <div>
       <label>Z</label>
-      <input type="number" [(ngModel)]="data.z"/>
+      <input type="number" [(ngModel)]="data.z" (change)="parent.applyChangesOnTriggerFromChild()" step="0.02"/>
+      <!--<input type="number" [(ngModel)]="data.z"  step="0.01"/>-->
     </div>
 </div>

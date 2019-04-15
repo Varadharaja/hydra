@@ -66,12 +66,20 @@ export class ArenaComponent implements OnInit {
       case "point":
       return shapeData.Transformation.Translation;
       break;
+      case "transformation":
+      return shapeData.Transformation;
       default:
       return null;
     }
 
   }
 
+  ChangeTransformation(txn: Transformation)
+  {
+    this.ChangeRotation(txn.Rotation);
+    this.ChangeScale(txn.Zoom);
+    this.ChangeTranslation(txn.Translation);
+  }
   ChangeScale(scl: Scale)
   {
 

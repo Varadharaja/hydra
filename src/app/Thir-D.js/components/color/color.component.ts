@@ -8,8 +8,10 @@ import { IComponent } from 'src/app/IComponent';
   styleUrls: ['./color.component.css']
 })
 export class ColorComponent implements OnInit, IComponent  {
+  parent: any;
   @Input()
-  data: Color = new Color(255, 255, 255, 1);
+  data: Color;
+  
   constructor() { }
 
   ngOnInit() {

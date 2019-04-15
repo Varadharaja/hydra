@@ -13,6 +13,7 @@ import { ChatMessage } from './Thir-D.js/contracts/chatmessage';
 import { ShapeComponent } from './Thir-D.js/components/shape/shape.component';
 import { ArenaComponent } from './Thir-D.js/components/arena/arena.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TransformationComponent } from './Thir-D.js/components/transformation/transformation.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     HydraComponent,
     DynamicDirective,
     ShapeComponent,
-    ArenaComponent
+    ArenaComponent,
+    TransformationComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { HttpClientModule } from '@angular/common/http';
     ScaleComponent,
     PointComponent,
     HydraComponent ,
-    ShapeComponent ],
+    ShapeComponent,
+    TransformationComponent ],
   providers: [],
   bootstrap: [AppComponent]
 })

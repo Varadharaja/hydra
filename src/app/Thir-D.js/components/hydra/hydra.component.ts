@@ -19,6 +19,9 @@ import { HydraContext } from './hydraContext';
 import { Goal } from '../../contracts/goal';
 import { Scale } from '../../contracts/scale';
 import { Point } from '../../contracts/point';
+import { observable, Observable } from 'rxjs';
+import { TransformationComponent } from '../transformation/transformation.component';
+import { Transformation } from '../../contracts/transformation';
 
 
 @Component({
@@ -50,10 +53,15 @@ export class HydraComponent implements OnInit, OnDestroy  {
     this.Conversation.push(newMessage);
     this.GetNextGoals();
 
-    this.comps.push(new CompItem(AngleComponent, new Angle(0,0,0)));
-    this.comps.push(new CompItem(ColorComponent, new Color(255,255,255)));
-    this.comps.push(new CompItem(PointComponent, new Point(0,0,0)));
-    this.comps.push(new CompItem(ScaleComponent, new Scale(1,1,1)));
+    let rotate = new Angle(0,0,0);
+    let translate = new Point(0,0,0);
+    let scale = new Scale(1,1,1);
+    this.comps.push(new CompItem(AngleComponent,rotate));
+    this.comps.push(new CompItem(ColorComponent,new Color(255,255,255)));
+    this.comps.push(new CompItem(PointComponent,translate));
+    this.comps.push(new CompItem(ScaleComponent,scale));
+    this.comps.push(new CompItem(TransformationComponent, new Transformation(translate,rotate,rotate, scale)));
+
 
     let initShape = new Shape("");
     initShape.Id = GxUtils.NewGuid();
@@ -212,22 +220,35 @@ export class HydraComponent implements OnInit, OnDestroy  {
 
         eval("compData=this." + this.context.currentGoal.PreProcess + "('"+ compHint +"')");
 
-        (<IComponent>componentRef.instance).data = compData;
+        (<IComponent>componentRef.instance).data =compData;
         this.dynHostData = (<IComponent>componentRef.instance).data;
+        (<IComponent>componentRef.instance).parent = this;
 
       }
       else
       {
         (<IComponent>componentRef.instance).data = compItem.data;
+        (<IComponent>componentRef.instance).parent = this;
+
         this.dynHostData = (<IComponent>componentRef.instance).data;
       }
-
 
       return true;
     }
 
   }
 
+
+
+  applyChangesOnTriggerFromChild()
+  {
+    if (this.context.currentGoal.PostProcess != "")
+    {
+      // Post Process event of the goal
+      eval('this.' +  this.context.currentGoal.PostProcess + "(this.dynHostData)");
+    } 
+      
+  }
 
 
   applyChanges()
@@ -240,7 +261,7 @@ export class HydraComponent implements OnInit, OnDestroy  {
     this.shouldShowApplyButton =false;
 
     this.Conversation.push(new ChatMessage("", "Your changes to " + this.context.currentGoal.Name.toLocaleLowerCase() + " are applied."));
-    
+
     this.GetNextGoals();
   }
 }

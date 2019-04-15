@@ -2,14 +2,14 @@
     <i>Please enter Scale</i>
     <div>
       <label>X</label>
-      <input type="range" min=0.1 max=10 [(ngModel)]="data.xScale"/>
+      <input type="range" min=0.1 max=10 [(ngModel)]="data.xScale"  (change)="parent.applyChangesOnTriggerFromChild()"/>
     </div>
     <div>
       <label>Y</label>
-      <input type="range" min=0.1 max=10 [(ngModel)]="data.yScale"/>
+      <input type="range" min=0.1 max=10 [(ngModel)]="data.yScale"  (change)="parent.applyChangesOnTriggerFromChild()"/>
     </div>
     <div>
       <label>Z</label>
-      <input type="range" min=0.1 max=10 [(ngModel)]="data.zScale"/>
+      <input type="range" min=0.1 max=10 [(ngModel)]="data.zScale"  (change)="parent.applyChangesOnTriggerFromChild()"/>
     </div>
 </div>
